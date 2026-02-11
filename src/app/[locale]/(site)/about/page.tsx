@@ -1,1 +1,3 @@
-// src/app/[locale]/(site)/about/page.tsx
+export default function AboutPage() {
+  return <div>About</div>;
+}

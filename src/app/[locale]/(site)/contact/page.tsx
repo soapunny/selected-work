@@ -1,1 +1,3 @@
-// src/app/[locale]/(site)/contact/page.tsx
+export default function ContactPage() {
+  return <div>Contact</div>;
+}
