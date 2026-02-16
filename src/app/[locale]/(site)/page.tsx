@@ -1,67 +1,113 @@
 // src/app/[locale]/(site)/page.tsx
 
+import { getFeaturedProjects } from "@/content/projects/projects";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const featured = getFeaturedProjects();
+  const primaryProject = featured[0];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="container-shell pt-12 pb-10 md:pt-14 md:pb-12">
+      {/* Hero */}
+      <section className="hero-layout">
+        {/* Left: Portrait */}
+        <div className="flex justify-center md:justify-center">
+          <div className="relative w-[280px] overflow-hidden rounded-3xl border border-white/10 bg-background/30 grayscale-5% p-2 glow-soft md:w-[280px]">
+            <div className="relative aspect-4/5 overflow-hidden rounded-2xl">
+              <Image
+                src="/portrait_new.jpg"
+                alt="E. So portrait"
+                width={520}
+                height={650}
+                priority
+                quality={85}
+                sizes="(min-width: 768px) 330px, 280px"
+                className="h-full w-full object-cover object-center contrast-105 brightness-95 portrait-mood"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Right: Title + CTAs */}
+        <div className="mt-6 min-w-0 flex flex-col items-start justify-center md:mt-0 md:items-start">
+          <p className="text-base font-semibold tracking-wide text-foreground md:text-lg">
+            E. So
           </p>
+
+          <h1 className="page-hero">
+            Design-Driven
+            <br />
+            Full-Stack Engineer
+          </h1>
+
+          <p className="page-description">
+            I build practical digital products with structured architecture and
+            a calm, premium UI sensibility.
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Link href={`/${locale}/projects`} className="btn-primary">
+              View Selected Work
+            </Link>
+
+            <Link href={`/${locale}/contact`} className="btn-secondary">
+              Contact
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Featured */}
+      <section className="mt-18">
+        <div className="section-header">
+          <h2 className="heading-section">Featured work</h2>
+          <Link href={`/${locale}/projects`} className="view-all-link">
+            View all →
+          </Link>
         </div>
-      </main>
-    </div>
+
+        <Link
+          href={`/${locale}/projects/pocketquest`}
+          className="group card-premium"
+        >
+          <div className="flex flex-col gap-8">
+            <div className="min-w-0">
+              <p className="text-xs font-medium tracking-wide text-muted">
+                {primaryProject.year}
+                {primaryProject.tags.length > 0
+                  ? ` • ${primaryProject.tags.slice(0, 2).join(" • ")}`
+                  : ""}
+              </p>
+
+              <h3 className="mt-2 text-2xl font-semibold tracking-tight text-foreground transition group-hover:text-white">
+                PocketQuest
+              </h3>
+
+              <p className="mt-3 max-w-2xl text-body-sm text-muted">
+                A mobile-first budgeting system focused on clean data modeling,
+                predictable period logic, and an experience that stays calm
+                under complexity.
+              </p>
+
+              <div className="mt-7 inline-flex">
+                <div className="card-cta">
+                  View case study{" "}
+                  <span aria-hidden className="card-cta-arrow">
+                    →
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Link>
+      </section>
+    </main>
   );
 }

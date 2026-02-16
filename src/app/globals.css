@@ -1,26 +1,282 @@
+/* src/app/globals.css */
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* -------------------------------------------------
+   Global design tokens (stable)
+   - Dark, premium baseline
+   - Subtle teal/green accent (user choice: B)
+--------------------------------------------------*/
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+:root {
+  /* Base colors (RGB triplets for flexible alpha usage) */
+  --bg: 10 12 16; /* deep charcoal */
+  --fg: 235 239 245; /* near-white */
+  --muted: 160 170 185; /* secondary text */
+  --border: 35 39 48; /* subtle border */
+
+  /* Accent (teal/green) */
+  --accent: 34 197 94; /* emerald-ish (Tailwind emerald-500 vibe) */
+
+  /* Font variables (created by next/font in layout) */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme inline {
+  --color-background: rgb(var(--bg));
+  --color-foreground: rgb(var(--fg));
+  --color-muted: rgb(var(--muted));
+  --color-border: rgb(var(--border));
+  --color-accent: rgb(var(--accent));
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  font-family:
+    var(--font-sans),
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    "Apple Color Emoji",
+    "Segoe UI Emoji";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection highlight (subtle, premium) */
+::selection {
+  background: rgba(var(--accent) / 0.24);
+}
+
+/* Links baseline (components typically override) */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* -------------------------------------------------
+   Minimal global utilities
+--------------------------------------------------*/
+@layer utilities {
+  /* Consistent site container */
+  .container-shell {
+    @apply mx-auto w-full max-w-6xl px-4;
+  }
+
+  /* Premium dark background with soft glow (for the Home hero area) */
+  .bg-premium {
+    background:
+      radial-gradient(
+        900px 520px at 72% 18%,
+        rgba(var(--accent) / 0.12),
+        transparent 60%
+      ),
+      radial-gradient(
+        760px 520px at 10% 12%,
+        rgba(255, 255, 255, 0.05),
+        transparent 60%
+      ),
+      rgb(var(--bg));
+  }
+
+  /* Portrait “mysterious mood” treatment (apply to <img>) */
+  .portrait-mood {
+    filter: brightness(0.9) contrast(1.06) saturate(0.92);
+  }
+
+  /* Soft glow + depth for portrait container */
+  .glow-soft {
+    box-shadow:
+      0 18px 60px rgba(0, 0, 0, 0.55),
+      0 0 44px rgba(var(--accent) / 0.1);
+  }
+
+  /* Fade the lower part of an image (apply to the <img>) */
+  .fade-bottom {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+}
+
+@layer components {
+  /*-------------------------------------------------
+  Typography
+  --------------------------------------------------*/
+
+  .heading-hero {
+    @apply text-4xl font-semibold leading-tight tracking-tight md:text-5xl;
+  }
+
+  .heading-section {
+    @apply text-lg font-semibold tracking-tight;
+  }
+
+  .text-body-lg {
+    @apply text-base leading-7 md:text-lg;
+  }
+
+  .text-body-sm {
+    @apply text-sm leading-6;
+  }
+  /*-------------------------------------------------
+  Layout
+  --------------------------------------------------*/
+  .section-header {
+    @apply mb-4 flex items-end justify-between;
+  }
+
+  .hero-layout {
+    @apply grid gap-8 md:min-h-[70vh] md:grid-cols-2 md:items-center;
+  }
+
+  .section-block {
+    @apply mt-14;
+  }
+
+  .section-divider {
+    @apply mt-12 border-t border-white/10;
+  }
+
+  /* -------------------------------------------------
+   Navbar links (premium hover)
+--------------------------------------------------*/
+
+  .nav-link {
+    @apply relative inline-flex items-center gap-2 text-sm transition-colors duration-200;
+    color: rgb(var(--muted));
+  }
+
+  .nav-link:hover {
+    color: rgb(var(--fg));
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -8px; /* -8px 말고 올리기 */
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition:
+      transform 220ms ease,
+      opacity 220ms ease;
+    opacity: 0;
+    background: rgba(var(--fg) / 0.35);
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    opacity: 1;
+    background: rgba(
+      var(--accent) / 0.55
+    ); /* ✅ hover 때 accent로 더 잘 보이게 */
+  }
+
+  /* language toggle */
+  .lang-link {
+    @apply text-xs font-medium tracking-wide
+         text-muted transition-colors duration-200
+         hover:text-foreground;
+  }
+
+  .lang-link-active {
+    @apply text-foreground;
+  }
+
+  /*-------------------------------------------------
+   Page Header System
+  --------------------------------------------------*/
+
+  .page-kicker {
+    @apply text-xs font-medium tracking-wide text-muted;
+  }
+
+  .page-hero {
+    @apply mt-3 max-w-3xl text-4xl font-semibold leading-tight tracking-tight md:text-5xl;
+  }
+
+  .page-description {
+    @apply mt-6 max-w-2xl text-base leading-7 md:text-lg text-muted;
+  }
+
+  /*-------------------------------------------------
+  Card component
+  --------------------------------------------------*/
+  .card-premium {
+    @apply relative block overflow-hidden rounded-3xl 
+           border border-white/10 
+           bg-linear-to-br from-white/5 to-white/2 
+           p-8 transition duration-300;
+  }
+
+  .card-premium:hover {
+    @apply -translate-y-1 border-white/20;
+    box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.6);
+  }
+
+  .card-cta {
+    @apply inline-flex items-center gap-2 
+           self-start rounded-2xl 
+           bg-white/5 px-5 py-2 
+           text-sm font-medium 
+           text-foreground transition duration-300;
+  }
+
+  .card-cta:hover {
+    @apply bg-white/10 translate-x-1;
+  }
+
+  .card-cta-arrow {
+    @apply transition-transform duration-300;
+  }
+
+  .card-cta:hover .card-cta-arrow {
+    @apply translate-x-1;
+  }
+
+  /*-------------------------------------------------
+  Buttons
+  --------------------------------------------------*/
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center
+           rounded-2xl bg-accent
+           px-5 py-3 text-sm font-semibold
+           text-black transition duration-300;
+  }
+
+  .btn-primary:hover {
+    @apply bg-accent/85 -translate-y-px;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center
+           rounded-2xl border
+           px-5 py-3 text-sm font-semibold
+           text-foreground transition duration-300;
+    border-color: rgb(var(--border));
+  }
+
+  .btn-secondary:hover {
+    @apply bg-white/5 -translate-y-px;
+  }
+
+  .view-all-link {
+    @apply text-sm text-muted hover:text-foreground transition-colors;
+  }
 }
