@@ -1,4 +1,10 @@
+# .gitignore
 
+
+# Personal photos (do not commit)
+public/portrait*.jpg
+public/portrait*.jpeg
+public/portrait*.png
 
 # Dependencies
 node_modules/
