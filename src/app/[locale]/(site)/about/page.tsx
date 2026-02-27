@@ -78,6 +78,16 @@ export default async function AboutPage({
           ))}
         </div>
       </section>
+
+      <div className="section-divider" />
+
+      <section className="section-block">
+        <h2 className="heading-section">{copy.sections.closingTitle}</h2>
+        <p className="mt-4 text-body-sm text-muted">
+          {copy.sections.closingBody}
+        </p>
+        <p className="mt-4 text-body-sm">{copy.sections.closingCta}</p>
+      </section>
     </main>
   );
 }

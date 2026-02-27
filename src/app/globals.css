@@ -406,4 +406,20 @@ a {
     color: rgb(var(--fg));
     filter: contrast(1.08) saturate(1.05);
   }
+
+  /*-------------------------------------------------
+    Identity Verse (About page)
+  --------------------------------------------------*/
+
+  .identity-verse {
+    @apply min-w-0 inline-flex items-baseline gap-3 text-right text-xs leading-5 italic;
+    color: rgba(var(--muted) / 0.72);
+  }
+
+  @media (min-width: 768px) {
+    .identity-verse {
+      white-space: nowrap;
+      flex-wrap: nowrap;
+    }
+  }
 }

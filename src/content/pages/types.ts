@@ -32,6 +32,9 @@ export type AboutCopy = {
     focusTitle: string;
     focusBody: string;
     coreStackTitle: string;
+    closingTitle: string;
+    closingBody: string;
+    closingCta: string;
   };
 };
 

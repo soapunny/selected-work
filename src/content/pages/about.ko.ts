@@ -17,5 +17,9 @@ export const aboutKo: AboutCopy = {
     focusBody:
       "웹에서는 Next.js/TypeScript, 서버에서는 도메인 정책과 경계 설계, 그리고 규모가 커져도 흔들리지 않는 UI 시스템에 집중합니다.",
     coreStackTitle: "Core Stack",
+    closingTitle: "제가 중요하게 보는 것",
+    closingBody:
+      "실제 제품 제약 속에서도 예측 가능한 동작, 명확한 경계, 유지보수 가능한 구조를 만드는 데 집중합니다.",
+    closingCta: "이런 방향의 팀이라면 함께 만들어가고 싶습니다.",
   },
 };
