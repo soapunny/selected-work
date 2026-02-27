@@ -412,7 +412,7 @@ a {
   --------------------------------------------------*/
 
   .identity-verse {
-    @apply min-w-0 inline-flex items-baseline gap-3 text-right text-xs leading-5 italic;
+    @apply min-w-0 inline-flex items-baseline gap-3 text-left md:text-right text-xs leading-5 italic;
     color: rgba(var(--muted) / 0.72);
   }
 

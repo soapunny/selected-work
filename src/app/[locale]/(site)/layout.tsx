@@ -47,7 +47,7 @@ export default async function SiteLayout({
 
       {/* Footer */}
       <footer className="border-t border-white/10">
-        <div className="container-shell flex h-16 items-center justify-between gap-6 text-xs text-muted">
+        <div className="container-shell flex flex-col gap-2 py-4 text-xs text-muted md:h-16 md:flex-row md:items-center md:justify-between md:gap-6 md:py-0">
           © {new Date().getFullYear()} E. So
           <p className="identity-verse m-0">
             &ldquo;Commit to the Lord whatever you do, and he will establish
