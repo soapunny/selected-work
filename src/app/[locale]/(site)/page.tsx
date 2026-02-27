@@ -1,6 +1,7 @@
 // src/app/[locale]/(site)/page.tsx
 
 import { getFeaturedProjects } from "@/content/projects/projects";
+import { getHomeCopy } from "@/content/pages";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,8 +11,11 @@ export default async function Home({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const featured = getFeaturedProjects();
+  const copy = getHomeCopy(locale);
+  const featured = getFeaturedProjects(locale);
   const primaryProject = featured[0];
+
+  const heroTitleParts = copy.hero.title.split("\n");
 
   return (
     <main className="container-shell pt-12 pb-10 md:pt-14 md:pb-12">
@@ -38,27 +42,27 @@ export default async function Home({
         {/* Right: Title + CTAs */}
         <div className="mt-6 min-w-0 flex flex-col items-start justify-center md:mt-0 md:items-start">
           <p className="text-base font-semibold tracking-wide text-foreground md:text-lg">
-            E. So
+            {copy.hero.nameLine}
           </p>
 
           <h1 className="page-hero">
-            Design-Driven
-            <br />
-            Full-Stack Engineer
+            {heroTitleParts.map((part, i) => (
+              <span key={i}>
+                {part}
+                {i < heroTitleParts.length - 1 ? <br /> : null}
+              </span>
+            ))}
           </h1>
 
-          <p className="page-description">
-            I build practical digital products with structured architecture and
-            a calm, premium UI sensibility.
-          </p>
+          <p className="page-description">{copy.hero.description}</p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link href={`/${locale}/projects`} className="btn-primary">
-              View Selected Work
+              {copy.hero.ctaPrimary}
             </Link>
 
             <Link href={`/${locale}/contact`} className="btn-secondary">
-              Contact
+              {copy.hero.ctaSecondary}
             </Link>
           </div>
         </div>
@@ -67,9 +71,9 @@ export default async function Home({
       {/* Featured */}
       <section className="mt-18">
         <div className="section-header">
-          <h2 className="heading-section">Featured work</h2>
+          <h2 className="heading-section">{copy.featured.heading}</h2>
           <Link href={`/${locale}/projects`} className="view-all-link">
-            View all →
+            {copy.featured.viewAll}
           </Link>
         </div>
 
@@ -91,17 +95,12 @@ export default async function Home({
               </h3>
 
               <p className="mt-3 max-w-2xl text-body-sm text-muted">
-                A mobile-first budgeting system focused on clean data modeling,
-                predictable period logic, and an experience that stays calm
-                under complexity.
+                {copy.featured.primaryCardBlurb}
               </p>
 
               <div className="mt-7 inline-flex">
                 <div className="card-cta">
-                  View case study{" "}
-                  <span aria-hidden className="card-cta-arrow">
-                    →
-                  </span>
+                  {copy.featured.primaryCardCta}
                 </div>
               </div>
             </div>

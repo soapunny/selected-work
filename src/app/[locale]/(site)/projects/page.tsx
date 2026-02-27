@@ -6,6 +6,7 @@ import {
   getAllProjects,
   getFeaturedProjects,
 } from "@/content/projects/projects";
+import { getProjectsPageCopy } from "@/content/pages";
 import { FeaturedProjectCard } from "@/components/projects/FeaturedProjectCard";
 
 export default async function ProjectsPage({
@@ -14,32 +15,41 @@ export default async function ProjectsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const copy = getProjectsPageCopy(locale);
 
-  const featured = getFeaturedProjects();
-  const all = getAllProjects();
+  const featured = getFeaturedProjects(locale);
+  const all = getAllProjects(locale);
 
   const primaryFeatured = featured[0];
+
+  const headerTitleParts = copy.header.title.split("\n");
 
   return (
     <main className="container-shell pt-12 pb-12 md:pt-14 md:pb-14">
       <header className="mb-12">
-        <p className="page-kicker">Projects</p>
+        {copy.header.kicker && (
+          <p className="page-kicker">{copy.header.kicker}</p>
+        )}
 
         <h1 className="page-hero">
-          Selected work shaped by calm systems and structured interaction.
+          {headerTitleParts.map((part, i) => (
+            <span key={i}>
+              {part}
+              {i < headerTitleParts.length - 1 ? <br /> : null}
+            </span>
+          ))}
         </h1>
 
-        <p className="page-description">
-          A collection of projects where clarity, architecture, and visual
-          restraint meet.
-        </p>
+        {copy.header.description && (
+          <p className="page-description">{copy.header.description}</p>
+        )}
       </header>
 
       {/* Featured */}
       {primaryFeatured && (
         <section className="mt-18">
           <div className="section-header">
-            <h2 className="heading-section">Featured work</h2>
+            <h2 className="heading-section">{copy.featuredHeading}</h2>
             <span />
           </div>
 
@@ -57,9 +67,9 @@ export default async function ProjectsPage({
       {/* All projects */}
       <section className="mt-14">
         <div className="section-header">
-          <h2 className="heading-section">More work</h2>
+          <h2 className="heading-section">{copy.moreHeading}</h2>
           <Link href={`/${locale}/contact`} className="view-all-link">
-            Contact →
+            {copy.contactCta}
           </Link>
         </div>
 

@@ -1,6 +1,5 @@
 // src/components/projects/ProjectGrid.tsx
 
-import { getAllProjects } from "@/content/projects/projects";
 import type { Project } from "@/content/projects/projects";
 import { ProjectCard } from "./ProjectCard";
 
@@ -10,8 +9,7 @@ type ProjectGridProps = {
 };
 
 export function ProjectGrid({ locale, projects }: ProjectGridProps) {
-  // Guard: if no projects are provided, render all projects
-  const items = projects ?? getAllProjects();
+  const items = projects ?? [];
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

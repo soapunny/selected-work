@@ -1,29 +1,42 @@
 // src/app/[locale]/(site)/contact/page.tsx
 
 import Link from "next/link";
+import { getContactCopy } from "@/content/pages";
 
-export default function ContactPage() {
+export default async function ContactPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const copy = getContactCopy(locale);
+
   const email = "soapunny@gmail.com";
   const githubUrl = "https://github.com/soapunny";
-  const resumeUrl = "/resume.pdf"; // public/resume.pdf 로 두면 됨
+  const resumeUrl = "/resume.pdf";
+
+  const headerTitleParts = copy.header.title.split("\n");
 
   return (
     <main className="container-shell section-block pb-14 md:pb-16">
       {/* Header */}
       <section>
-        <p className="page-kicker">Contact</p>
+        {copy.header.kicker && (
+          <p className="page-kicker">{copy.header.kicker}</p>
+        )}
 
         <h1 className="page-hero">
-          Let’s build something calm,
-          <br />
-          intentional, and useful.
+          {headerTitleParts.map((part, i) => (
+            <span key={i}>
+              {part}
+              {i < headerTitleParts.length - 1 ? <br /> : null}
+            </span>
+          ))}
         </h1>
 
-        <p className="page-description">
-          For collaboration, opportunities, or thoughtful feedback — feel free
-          to reach out. I’m especially interested in product work where UX
-          clarity and strong systems go hand in hand.
-        </p>
+        {copy.header.description && (
+          <p className="page-description">{copy.header.description}</p>
+        )}
       </section>
 
       <div className="section-divider" />
@@ -31,7 +44,7 @@ export default function ContactPage() {
       {/* Primary actions */}
       <section className="section-block">
         <div className="section-header">
-          <h2 className="heading-section">Ways to reach me</h2>
+          <h2 className="heading-section">{copy.sections.waysTitle}</h2>
           <span />
         </div>
 
@@ -58,7 +71,7 @@ export default function ContactPage() {
                 />
               </svg>
             </span>
-            <span>Email</span>
+            <span>{copy.sections.actions.email}</span>
           </a>
           <Link
             className="btn-secondary w-full"
@@ -75,7 +88,7 @@ export default function ContactPage() {
                 <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.36 6.84 9.72.5.1.66-.22.66-.48 0-.24-.01-.88-.02-1.72-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.88 1.55 2.3 1.1 2.86.84.09-.66.35-1.1.63-1.36-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.03 1.03-2.74-.1-.26-.45-1.3.1-2.72 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0112 6.8c.83 0 1.67.12 2.45.36 1.9-1.32 2.74-1.05 2.74-1.05.55 1.42.2 2.46.1 2.72.64.71 1.02 1.62 1.02 2.74 0 3.93-2.34 4.8-4.57 5.05.36.32.69.94.69 1.9 0 1.37-.01 2.48-.01 2.82 0 .26.16.59.67.48A10.02 10.02 0 0022 12.26C22 6.58 17.52 2 12 2z" />
               </svg>
             </span>
-            <span>GitHub</span>
+            <span>{copy.sections.actions.github}</span>
           </Link>
 
           <Link
@@ -104,12 +117,12 @@ export default function ContactPage() {
                 />
               </svg>
             </span>
-            <span>Resume</span>
+            <span>{copy.sections.actions.resume}</span>
           </Link>
         </div>
 
         <p className="mt-4 text-body-sm text-muted">
-          I usually respond within 24–48 hours.
+          {copy.sections.responseNote}
         </p>
       </section>
 
@@ -118,15 +131,16 @@ export default function ContactPage() {
       {/* Details */}
       <section className="section-block grid gap-10 md:grid-cols-2">
         <div>
-          <h2 className="heading-section">Based in</h2>
-          <p className="mt-4 text-body-sm text-muted">Atlanta, GA</p>
+          <h2 className="heading-section">{copy.sections.basedInTitle}</h2>
+          <p className="mt-4 text-body-sm text-muted">
+            {copy.sections.basedInValue}
+          </p>
         </div>
 
         <div>
-          <h2 className="heading-section">Focus</h2>
+          <h2 className="heading-section">{copy.sections.focusTitle}</h2>
           <p className="mt-4 text-body-sm text-muted">
-            UX/UI design to full-stack development — building clear interfaces
-            and reliable systems.
+            {copy.sections.focusBody}
           </p>
         </div>
       </section>

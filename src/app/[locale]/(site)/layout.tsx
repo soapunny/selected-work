@@ -2,6 +2,8 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
+import NavLocale from "@/components/locale/NavLocale";
+import { getNav } from "@/content/nav";
 
 export default async function SiteLayout({
   children,
@@ -11,6 +13,7 @@ export default async function SiteLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const nav = getNav(locale);
 
   return (
     <div className="min-h-screen bg-premium">
@@ -18,39 +21,23 @@ export default async function SiteLayout({
       <header className="sticky top-0 z-50 border-b border-white/10 bg-background/80 backdrop-blur">
         <nav className="container-shell flex h-16 items-center justify-between">
           <Link href={`/${locale}`} className="nav-link">
-            E. So
+            {nav.brand}
           </Link>
 
           <div className="flex items-center gap-6 text-sm text-muted">
             <Link href={`/${locale}/projects`} className="nav-link">
-              Projects
+              {nav.items.projects}
             </Link>
             <Link href={`/${locale}/about`} className="nav-link">
-              About
+              {nav.items.about}
             </Link>
             <Link href={`/${locale}/contact`} className="nav-link">
-              Contact
+              {nav.items.contact}
             </Link>
 
             <span className="mx-1 h-4 w-px bg-border" aria-hidden />
 
-            <div className="flex items-center gap-2">
-              <Link
-                href="/en"
-                className={`lang-link ${locale === "en" ? "lang-link-active" : ""}`}
-              >
-                EN
-              </Link>
-              <span className="text-border" aria-hidden>
-                /
-              </span>
-              <Link
-                href="/ko"
-                className={`lang-link ${locale === "ko" ? "lang-link-active" : ""}`}
-              >
-                KO
-              </Link>
-            </div>
+            <NavLocale locale={locale} />
           </div>
         </nav>
       </header>

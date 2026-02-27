@@ -1,24 +1,37 @@
 // src/app/[locale]/(site)/about/page.tsx
 
-export default function AboutPage() {
+import { getAboutCopy } from "@/content/pages";
+
+export default async function AboutPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const copy = getAboutCopy(locale);
+
+  const headerTitleParts = copy.header.title.split("\n");
+
   return (
     <main className="container-shell section-block pb-14 md:pb-16">
       {/* Header */}
       <section>
-        <p className="page-kicker">About</p>
+        {copy.header.kicker && (
+          <p className="page-kicker">{copy.header.kicker}</p>
+        )}
 
         <h1 className="page-hero">
-          Designing thoughtful interfaces.
-          <br />
-          Building systems with intention.
+          {headerTitleParts.map((part, i) => (
+            <span key={i}>
+              {part}
+              {i < headerTitleParts.length - 1 ? <br /> : null}
+            </span>
+          ))}
         </h1>
 
-        <p className="page-description">
-          I’m E. So — a front-end focused builder who values clarity, structure,
-          and emotional tone in digital products. My work blends technical
-          precision with visual restraint, aiming for interfaces that feel
-          intentional, calm, and quietly confident.
-        </p>
+        {copy.header.description && (
+          <p className="page-description">{copy.header.description}</p>
+        )}
       </section>
 
       <div className="section-divider" />
@@ -26,21 +39,16 @@ export default function AboutPage() {
       {/* Philosophy */}
       <section className="section-block grid gap-10 md:grid-cols-2">
         <div>
-          <h2 className="heading-section">Approach</h2>
+          <h2 className="heading-section">{copy.sections.approachTitle}</h2>
           <p className="mt-4 text-body-sm text-muted">
-            I treat product development as system design rather than feature
-            assembly. Structure comes first — layout rhythm, typography
-            hierarchy, and component consistency. Once the system is stable,
-            interaction and motion become refinement rather than decoration.
+            {copy.sections.approachBody}
           </p>
         </div>
 
         <div>
-          <h2 className="heading-section">Focus</h2>
+          <h2 className="heading-section">{copy.sections.focusTitle}</h2>
           <p className="mt-4 text-body-sm text-muted">
-            My focus is modern React ecosystems (Next.js, TypeScript), scalable
-            UI systems, and clean design implementation. I’m especially drawn to
-            products where thoughtful UX matters more than visual noise.
+            {copy.sections.focusBody}
           </p>
         </div>
       </section>
@@ -49,7 +57,7 @@ export default function AboutPage() {
 
       {/* Core Stack */}
       <section className="section-block">
-        <h2 className="heading-section">Core Stack</h2>
+        <h2 className="heading-section">{copy.sections.coreStackTitle}</h2>
         <div className="mt-6 flex flex-wrap gap-3">
           {[
             "Next.js",
