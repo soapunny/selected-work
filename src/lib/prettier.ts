@@ -11,7 +11,6 @@ import type { BundledLanguage, BundledTheme, Highlighter } from "shiki";
  */
 
 declare global {
-  // eslint-disable-next-line no-var
   var __PQ_SHIKI__:
     | {
         highlighter: Highlighter | null;
