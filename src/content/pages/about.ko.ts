@@ -7,7 +7,7 @@ export const aboutKo: AboutCopy = {
     kicker: "About",
     title: "구조가 먼저.\nUI는 명확하게.",
     description:
-      "저는 E. So입니다. 경계를 분명히 나누고(계약/정책/영속성), 제품이 커져도 예측 가능한 동작을 유지하도록 설계합니다. 화면은 과하게 꾸미기보다 메시지가 또렷하게 전달되도록 만듭니다.",
+      "저는 Ethan So입니다. 경계를 분명히 나누고(계약/정책/영속성), 제품이 커져도 예측 가능한 동작을 유지하도록 설계합니다. 화면은 과하게 꾸미기보다 메시지가 또렷하게 전달되도록 만듭니다.",
   },
   sections: {
     approachTitle: "Approach",

@@ -7,7 +7,7 @@ export const aboutEn: AboutCopy = {
     kicker: "About",
     title: "Systems first.\nInterface clarity always.",
     description:
-      "I'm E. So — a full-stack engineer who values explicit boundaries, stable data contracts, and UI that communicates without noise.",
+      "I'm Ethan So — a full-stack engineer who values explicit boundaries, stable data contracts, and UI that communicates without noise.",
   },
   sections: {
     approachTitle: "Approach",
