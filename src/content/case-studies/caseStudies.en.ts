@@ -3,6 +3,213 @@
 import type { CaseStudy } from "./types";
 
 export const caseStudiesEn: Record<string, CaseStudy> = {
+  reel: {
+    labels: {
+      demoTitle: "Demo",
+      demoBadge: "live",
+      architectureTitle: "System Architecture",
+      architectureBadge: "frontend-first",
+      domainTitle: "Design Principles",
+      domainBadge: "principles",
+      selectedTitle: "Selected Code",
+      selectedBadge: "excerpts",
+    },
+    demo: {
+      embedUrl: "https://d3j1066xoxz7fm.cloudfront.net",
+      caption: "REEL - Movie Discovery App (React + TypeScript)",
+    },
+    architectureIntro:
+      "REEL is a frontend-first movie discovery app built with React and TypeScript. The architecture is organized around clear separation: API calls are isolated in a dedicated layer, global state is managed with Zustand, and UI components are kept focused and reusable.",
+    architectureFlow: `TMDB API
+↓
+API Layer (tmdb.ts)
+↓
+Custom Hooks / Screens
+↓
+Zustand Store (Wishlist)
+↓
+localStorage (persist)
+↓
+UI Components (MovieCard, Modal, Skeleton)`,
+    domainIntro:
+      "REEL is designed around predictable data flow and consistent UX patterns. API calls are debounced to prevent excessive requests, infinite scroll is handled with Intersection Observer, and loading states are split to avoid layout shifts.",
+    impact:
+      "Separating the API layer from UI components makes the codebase easy to extend. Adding a new endpoint or screen requires no changes to existing components. The Zustand store with localStorage persistence ensures wishlist data survives page refreshes without a backend.",
+    tradeoffs:
+      "Using client-side state management (Zustand + localStorage) is simple and effective for a single-user app, but would need to be replaced with a backend solution for multi-device sync or authentication. The current debounce approach in SearchScreen could be extracted into a reusable custom hook for better reusability.",
+    domainCards: [
+      {
+        title: "Isolated API layer",
+        body: "All TMDB fetch logic lives in tmdb.ts. Screens never call fetch directly — they consume typed functions that return typed data.",
+      },
+      {
+        title: "Split loading states",
+        body: "Initial load and pagination use separate loading flags (loading / pageLoading) to prevent scroll position resets and layout shifts during infinite scroll.",
+      },
+      {
+        title: "Type-safe data contracts",
+        body: "Movie and MovieDetail are separate TypeScript interfaces. MovieDetail extends Movie using Omit to replace genre_ids with the richer genres array returned by the detail endpoint.",
+      },
+      {
+        title: "Persistent client state",
+        body: "Wishlist state is managed in Zustand with the persist middleware, automatically syncing to localStorage so data survives page refreshes without a backend.",
+      },
+    ],
+    exampleNote:
+      "The SearchScreen demonstrates several of these principles together: debounced real-time search, paginated infinite scroll with Intersection Observer, duplicate deduplication with Set, and split loading states to maintain scroll position.",
+    selectedIntro:
+      "Short excerpts that highlight the key frontend patterns: API isolation, TypeScript contracts, infinite scroll, and persistent state management.",
+    snippets: [
+      {
+        title: "Typed API layer",
+        subtitle:
+          "All TMDB calls are isolated behind typed functions. Screens consume data, not fetch logic.",
+        lang: "ts",
+        code: `// src/api/tmdb.ts
+export const getMovieById = async (id: string): Promise<MovieDetail> => {
+  const response = await fetch(
+    \`\${BASE_URL}/movie/\${id}?api_key=\${API_KEY}&language=\${API_LANGUAGE}&append_to_response=videos\`
+  );
+  const json: MovieDetail = await response.json();
+  return json;
+};
+
+export const searchMovies = async (
+  query: string,
+  page: number = 1
+): Promise<PaginatedResponse> => {
+  const response = await fetch(
+    \`\${BASE_URL}/search/movie?api_key=\${API_KEY}&language=\${API_LANGUAGE}&query=\${query}&page=\${page}\`
+  );
+  return response.json();
+};`,
+      },
+      {
+        title: "TypeScript contract: MovieDetail extends Movie",
+        subtitle:
+          "MovieDetail replaces genre_ids with the richer genres array using Omit, keeping the type contract explicit.",
+        lang: "ts",
+        code: `// src/types/movie.ts
+export interface Movie {
+  id: number;
+  title: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  genre_ids: number[];
+  vote_average: number;
+  release_date: string;
+  overview: string;
+}
+
+export interface MovieDetail extends Omit<Movie, "genre_ids"> {
+  genres: Genre[];           // richer than genre_ids
+  runtime: number | null;
+  tagline: string;
+  videos: { results: Video[] };
+}`,
+      },
+      {
+        title: "Debounced real-time search",
+        subtitle:
+          "Search requests are debounced with setTimeout cleanup to prevent excessive API calls while typing.",
+        lang: "ts",
+        code: `// src/screens/SearchScreen.tsx
+useEffect(() => {
+  if (!keyword) return;
+  setLoading(true);
+
+  const timer = setTimeout(async () => {
+    try {
+      const res = await searchMovies(keyword);
+      setMovies(res.results);
+      setTotalPages(res.total_pages);
+    } finally {
+      setLoading(false);
+    }
+  }, 300); // debounce: wait 300ms after last keystroke
+
+  return () => clearTimeout(timer); // cleanup: cancel on keyword change
+}, [keyword]);`,
+      },
+      {
+        title: "Infinite scroll with Intersection Observer",
+        subtitle:
+          "A sentinel div at the bottom of the list triggers the next page load when it enters the viewport.",
+        lang: "ts",
+        code: `// src/screens/SearchScreen.tsx
+const handleObserver = useCallback(
+  (entries: IntersectionObserverEntry[]) => {
+    const target = entries[0];
+    if (target.isIntersecting && !pageLoading && page < totalPages) {
+      setPage((prev) => prev + 1);
+    }
+  },
+  [pageLoading, page, totalPages],
+);
+
+useEffect(() => {
+  const observer = new IntersectionObserver(handleObserver, {
+    threshold: 0.5,
+  });
+  if (observerRef.current) observer.observe(observerRef.current);
+  return () => observer.disconnect();
+}, [handleObserver]);`,
+      },
+      {
+        title: "Duplicate deduplication with Set",
+        subtitle:
+          "TMDB can return duplicate movies across pages. A Set of existing IDs filters them out before appending.",
+        lang: "ts",
+        code: `// src/screens/SearchScreen.tsx
+setMovies((prev) => {
+  const existingIds = new Set(prev.map((m) => m.id));
+  const newMovies = res.results.filter((m) => !existingIds.has(m.id));
+  return [...prev, ...newMovies];
+});`,
+      },
+      {
+        title: "Zustand store with localStorage persistence",
+        subtitle:
+          "Wishlist state is managed globally with Zustand and persisted to localStorage via the persist middleware.",
+        lang: "ts",
+        code: `// src/store/wishlistStore.ts
+export const useWishlistStore = create<WishlistStore>()(
+  persist(
+    (set, get) => ({
+      wishlist: [],
+      addToWishlist: (movie) =>
+        set((state) => ({ wishlist: [...state.wishlist, movie] })),
+      removeFromWishlist: (id) =>
+        set((state) => ({
+          wishlist: state.wishlist.filter((m) => m.id !== id),
+        })),
+      isInWishlist: (id) => get().wishlist.some((m) => m.id === id),
+    }),
+    { name: "reel-wishlist" }, // localStorage key
+  ),
+);`,
+      },
+      {
+        title: "Official trailer filtering with fallback",
+        subtitle:
+          "Prefer the official YouTube trailer. Fall back to the first available YouTube video if none is marked official.",
+        lang: "ts",
+        code: `// src/screens/MovieDetailScreen.tsx
+const videos = res.videos?.results ?? [];
+
+const officialTrailer = videos.find(
+  (v) => v.type === "Trailer" && v.site === "YouTube" && v.official
+);
+const fallback = videos.find((v) => v.site === "YouTube");
+
+setTrailer(officialTrailer ?? fallback ?? null);`,
+      },
+    ],
+    selectedFooter:
+      "Each excerpt highlights a specific frontend pattern: typed API boundaries, TypeScript contracts, debounced search, Intersection Observer pagination, Set-based deduplication, Zustand persistence, and trailer filtering logic.",
+    patternNote:
+      "These patterns — API isolation, typed contracts, and predictable state management — are applied consistently across all screens (HomeScreen, SearchScreen, WishlistScreen, MovieDetailScreen), ensuring the app remains easy to extend and maintain.",
+  },
   pocketquest: {
     labels: {
       demoTitle: "Demo",

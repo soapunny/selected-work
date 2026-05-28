@@ -3,6 +3,213 @@
 import type { CaseStudy } from "./types";
 
 export const caseStudiesKo: Record<string, CaseStudy> = {
+  reel: {
+    labels: {
+      demoTitle: "데모",
+      demoBadge: "라이브",
+      architectureTitle: "시스템 아키텍처",
+      architectureBadge: "구조",
+      domainTitle: "설계 원칙",
+      domainBadge: "원칙",
+      selectedTitle: "코드 발췌",
+      selectedBadge: "코드",
+    },
+    demo: {
+      embedUrl: "https://d3j1066xoxz7fm.cloudfront.net",
+      caption: "REEL - 영화 탐색 앱 (React + TypeScript)",
+    },
+    architectureIntro:
+      "REEL은 React와 TypeScript로 구축한 프론트엔드 중심의 영화 탐색 앱입니다. API 호출은 전용 레이어에 격리하고, 전역 상태는 Zustand로 관리하며, UI 컴포넌트는 단일 책임을 갖도록 설계했습니다.",
+    architectureFlow: `TMDB API
+↓
+API 레이어 (tmdb.ts)
+↓
+커스텀 훅 / 화면
+↓
+Zustand 스토어 (위시리스트)
+↓
+localStorage (persist)
+↓
+UI 컴포넌트 (MovieCard, Modal, Skeleton)`,
+    domainIntro:
+      "REEL은 예측 가능한 데이터 흐름과 일관된 UX 패턴을 목표로 설계했습니다. API 호출은 debounce로 과도한 요청을 방지하고, 무한 스크롤은 Intersection Observer로 구현했으며, 로딩 상태는 분리하여 레이아웃 이동을 방지했습니다.",
+    impact:
+      "API 레이어를 UI 컴포넌트에서 분리함으로써 새로운 엔드포인트나 화면을 추가할 때 기존 컴포넌트를 수정할 필요가 없습니다. Zustand와 localStorage persist 미들웨어를 조합하여 백엔드 없이도 새로고침 후 위시리스트 데이터가 유지됩니다.",
+    tradeoffs:
+      "클라이언트 상태 관리(Zustand + localStorage)는 단일 사용자 앱에서 간단하고 효과적이지만, 멀티 기기 동기화나 인증이 필요한 경우 백엔드 솔루션으로 대체해야 합니다. SearchScreen의 debounce 로직은 재사용 가능한 커스텀 훅으로 추출하면 더 나은 구조가 될 수 있습니다.",
+    domainCards: [
+      {
+        title: "격리된 API 레이어",
+        body: "모든 TMDB fetch 로직은 tmdb.ts에 위치합니다. 화면 컴포넌트는 fetch를 직접 호출하지 않고, 타입이 명시된 함수를 통해 데이터를 소비합니다.",
+      },
+      {
+        title: "분리된 로딩 상태",
+        body: "초기 로드와 페이지네이션은 별도의 로딩 플래그(loading / pageLoading)를 사용합니다. 이를 통해 무한 스크롤 중 스크롤 위치 초기화와 레이아웃 이동을 방지합니다.",
+      },
+      {
+        title: "타입 안전한 데이터 계약",
+        body: "Movie와 MovieDetail은 별도의 TypeScript 인터페이스입니다. MovieDetail은 Omit을 사용해 genre_ids를 제거하고, 상세 API가 반환하는 더 풍부한 genres 배열로 대체합니다.",
+      },
+      {
+        title: "영속적 클라이언트 상태",
+        body: "위시리스트 상태는 Zustand의 persist 미들웨어로 관리되며, localStorage에 자동으로 동기화됩니다. 백엔드 없이도 새로고침 후 데이터가 유지됩니다.",
+      },
+    ],
+    exampleNote:
+      "SearchScreen은 이 원칙들이 함께 적용된 대표적인 사례입니다: debounce 실시간 검색, Intersection Observer 기반 무한 스크롤, Set을 활용한 중복 제거, 스크롤 위치 유지를 위한 분리된 로딩 상태.",
+    selectedIntro:
+      "핵심 프론트엔드 패턴을 보여주는 코드 발췌입니다: API 격리, TypeScript 계약, 무한 스크롤, 영속 상태 관리.",
+    snippets: [
+      {
+        title: "타입이 명시된 API 레이어",
+        subtitle:
+          "모든 TMDB 호출은 타입이 명시된 함수 뒤에 격리됩니다. 화면은 fetch 로직이 아닌 데이터를 소비합니다.",
+        lang: "ts",
+        code: `// src/api/tmdb.ts
+export const getMovieById = async (id: string): Promise<MovieDetail> => {
+  const response = await fetch(
+    \`\${BASE_URL}/movie/\${id}?api_key=\${API_KEY}&language=\${API_LANGUAGE}&append_to_response=videos\`
+  );
+  const json: MovieDetail = await response.json();
+  return json;
+};
+
+export const searchMovies = async (
+  query: string,
+  page: number = 1
+): Promise<PaginatedResponse> => {
+  const response = await fetch(
+    \`\${BASE_URL}/search/movie?api_key=\${API_KEY}&language=\${API_LANGUAGE}&query=\${query}&page=\${page}\`
+  );
+  return response.json();
+};`,
+      },
+      {
+        title: "TypeScript 계약: MovieDetail extends Movie",
+        subtitle:
+          "MovieDetail은 Omit을 사용해 genre_ids를 제거하고 더 풍부한 genres 배열로 대체합니다.",
+        lang: "ts",
+        code: `// src/types/movie.ts
+export interface Movie {
+  id: number;
+  title: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  genre_ids: number[];
+  vote_average: number;
+  release_date: string;
+  overview: string;
+}
+
+export interface MovieDetail extends Omit<Movie, "genre_ids"> {
+  genres: Genre[];           // genre_ids보다 풍부한 데이터
+  runtime: number | null;
+  tagline: string;
+  videos: { results: Video[] };
+}`,
+      },
+      {
+        title: "Debounce 실시간 검색",
+        subtitle:
+          "setTimeout cleanup을 활용한 debounce로 타이핑 중 과도한 API 호출을 방지합니다.",
+        lang: "ts",
+        code: `// src/screens/SearchScreen.tsx
+useEffect(() => {
+  if (!keyword) return;
+  setLoading(true);
+
+  const timer = setTimeout(async () => {
+    try {
+      const res = await searchMovies(keyword);
+      setMovies(res.results);
+      setTotalPages(res.total_pages);
+    } finally {
+      setLoading(false);
+    }
+  }, 300); // debounce: 마지막 입력 후 300ms 대기
+
+  return () => clearTimeout(timer); // cleanup: keyword 변경 시 취소
+}, [keyword]);`,
+      },
+      {
+        title: "Intersection Observer 무한 스크롤",
+        subtitle:
+          "목록 하단의 sentinel div가 뷰포트에 진입하면 다음 페이지 로드를 트리거합니다.",
+        lang: "ts",
+        code: `// src/screens/SearchScreen.tsx
+const handleObserver = useCallback(
+  (entries: IntersectionObserverEntry[]) => {
+    const target = entries[0];
+    if (target.isIntersecting && !pageLoading && page < totalPages) {
+      setPage((prev) => prev + 1);
+    }
+  },
+  [pageLoading, page, totalPages],
+);
+
+useEffect(() => {
+  const observer = new IntersectionObserver(handleObserver, {
+    threshold: 0.5,
+  });
+  if (observerRef.current) observer.observe(observerRef.current);
+  return () => observer.disconnect();
+}, [handleObserver]);`,
+      },
+      {
+        title: "Set을 활용한 중복 제거",
+        subtitle:
+          "TMDB는 페이지 간 중복 영화를 반환할 수 있습니다. 기존 ID의 Set으로 추가 전 필터링합니다.",
+        lang: "ts",
+        code: `// src/screens/SearchScreen.tsx
+setMovies((prev) => {
+  const existingIds = new Set(prev.map((m) => m.id));
+  const newMovies = res.results.filter((m) => !existingIds.has(m.id));
+  return [...prev, ...newMovies];
+});`,
+      },
+      {
+        title: "Zustand 스토어와 localStorage 영속성",
+        subtitle:
+          "위시리스트 상태는 Zustand로 전역 관리되며, persist 미들웨어를 통해 localStorage에 자동 저장됩니다.",
+        lang: "ts",
+        code: `// src/store/wishlistStore.ts
+export const useWishlistStore = create<WishlistStore>()(
+  persist(
+    (set, get) => ({
+      wishlist: [],
+      addToWishlist: (movie) =>
+        set((state) => ({ wishlist: [...state.wishlist, movie] })),
+      removeFromWishlist: (id) =>
+        set((state) => ({
+          wishlist: state.wishlist.filter((m) => m.id !== id),
+        })),
+      isInWishlist: (id) => get().wishlist.some((m) => m.id === id),
+    }),
+    { name: "reel-wishlist" }, // localStorage 키
+  ),
+);`,
+      },
+      {
+        title: "공식 트레일러 필터링 및 폴백",
+        subtitle:
+          "공식 YouTube 트레일러를 우선합니다. 없으면 첫 번째 YouTube 영상으로 폴백합니다.",
+        lang: "ts",
+        code: `// src/screens/MovieDetailScreen.tsx
+const videos = res.videos?.results ?? [];
+
+const officialTrailer = videos.find(
+  (v) => v.type === "Trailer" && v.site === "YouTube" && v.official
+);
+const fallback = videos.find((v) => v.site === "YouTube");
+
+setTrailer(officialTrailer ?? fallback ?? null);`,
+      },
+    ],
+    selectedFooter:
+      "각 코드 발췌는 핵심 프론트엔드 패턴을 보여줍니다: 타입이 명시된 API 경계, TypeScript 계약, debounce 검색, Intersection Observer 페이지네이션, Set 기반 중복 제거, Zustand 영속성, 트레일러 필터링 로직.",
+    patternNote:
+      "이 패턴들 — API 격리, 타입 계약, 예측 가능한 상태 관리 — 은 모든 화면(HomeScreen, SearchScreen, WishlistScreen, MovieDetailScreen)에 일관되게 적용되어 앱을 확장하고 유지보수하기 쉽게 만듭니다.",
+  },
   pocketquest: {
     labels: {
       demoTitle: "데모",

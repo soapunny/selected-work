@@ -4,6 +4,14 @@ import type { Project } from "./types";
 
 export const projectsKo: Project[] = [
   {
+    slug: "reel",
+    title: "REEL",
+    description: "실시간 검색과 무한 스크롤이 있는 영화 탐색 앱",
+    year: "2026",
+    tags: ["React", "TypeScript", "TMDB API"],
+    featured: true,
+  },
+  {
     slug: "pocketquest",
     title: "PocketQuest",
     description: "플랜 기반 가계부 — 기간 로직과 구조화된 데이터 모델링",

@@ -4,6 +4,15 @@ import type { Project } from "./types";
 
 export const projectsEn: Project[] = [
   {
+    slug: "reel",
+    title: "REEL",
+    description:
+      "Movie discovery app with real-time search and infinite scroll",
+    year: "2026",
+    tags: ["React", "TypeScript", "TMDB API"],
+    featured: true,
+  },
+  {
     slug: "pocketquest",
     title: "PocketQuest",
     description: "Plan-based budgeting with structured periods",
