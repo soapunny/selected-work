@@ -7,4 +7,5 @@ export type Project = {
   year: string;
   tags: string[];
   featured: boolean;
+  github?: string;
 };

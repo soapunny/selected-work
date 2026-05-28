@@ -10,6 +10,7 @@ export const projectsKo: Project[] = [
     year: "2026",
     tags: ["React", "TypeScript", "TMDB API"],
     featured: false,
+    github: "https://github.com/soapunny/streaming-service",
   },
   {
     slug: "pocketquest",
@@ -18,6 +19,7 @@ export const projectsKo: Project[] = [
     year: "2026",
     tags: ["모바일", "가계부", "React Native"],
     featured: true,
+    github: "https://github.com/soapunny/PocketQuest",
   },
   {
     slug: "facebook-chatbot",
@@ -26,5 +28,6 @@ export const projectsKo: Project[] = [
     year: "2023",
     tags: ["챗봇", "자동화", "Java"],
     featured: false,
+    github: "https://github.com/soapunny/FBMessagingBot",
   },
 ];

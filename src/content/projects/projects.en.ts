@@ -11,6 +11,7 @@ export const projectsEn: Project[] = [
     year: "2026",
     tags: ["React", "TypeScript", "TMDB API"],
     featured: false,
+    github: "https://github.com/soapunny/streaming-service",
   },
   {
     slug: "pocketquest",
@@ -19,6 +20,7 @@ export const projectsEn: Project[] = [
     year: "2026",
     tags: ["Mobile", "Budgeting", "React Native"],
     featured: true,
+    github: "https://github.com/soapunny/PocketQuest",
   },
   {
     slug: "facebook-chatbot",
@@ -27,5 +29,6 @@ export const projectsEn: Project[] = [
     year: "2023",
     tags: ["Chatbot", "Automation", "Java"],
     featured: false,
+    github: "https://github.com/soapunny/FBMessagingBot",
   },
 ];
