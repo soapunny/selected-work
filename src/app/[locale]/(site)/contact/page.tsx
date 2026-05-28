@@ -14,7 +14,7 @@ export default async function ContactPage({
   const email = "soapunny@gmail.com";
   const githubUrl = "https://github.com/soapunny";
   const resumeUrl =
-    "https://drive.google.com/file/d/1_Xy89PcY7U9MGR3NckH1b1irJolkIcr9/view?usp=share_link";
+    "https://drive.google.com/file/d/1gOUzuwX0eHMYgeizID39miGPSbg6ZkT4/view?usp=share_link";
 
   const headerTitleParts = copy.header.title.split("\n");
 

@@ -4,7 +4,7 @@ import type { HomeCopy } from "./types";
 
 export const homeKo: HomeCopy = {
   hero: {
-    nameLine: "E. So",
+    nameLine: "Ethan So",
     title: "유지보수 가능한 시스템을 만드는\n풀스택 엔지니어",
     description:
       "명확한 경계와 예측 가능한 로직으로 제품을 설계하고, 과하지 않은 UI로 핵심 경험을 차분하게 전달합니다.",
