@@ -11,6 +11,7 @@ export const projectsKo: Project[] = [
     tags: ["React", "TypeScript", "TMDB API"],
     featured: false,
     github: "https://github.com/soapunny/streaming-service",
+    liveUrl: "https://d3j1066xoxz7fm.cloudfront.net",
   },
   {
     slug: "pocketquest",

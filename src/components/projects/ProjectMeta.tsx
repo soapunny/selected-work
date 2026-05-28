@@ -1,10 +1,10 @@
 // src/components/projects/ProjectMeta.tsx
 
-import type { Project } from "@/content/projects/projects"
+import type { Project } from "@/content/projects/types";
 
 type ProjectMetaProps = {
-  project: Project
-}
+  project: Project;
+};
 
 export function ProjectMeta({ project }: ProjectMetaProps) {
   return (
@@ -18,12 +18,27 @@ export function ProjectMeta({ project }: ProjectMetaProps) {
         </span>
       )}
       <span>—</span>
-      <a href="#" className="hover:text-foreground">
-        Live
-      </a>
-      <a href="#" className="hover:text-foreground">
-        Repo
-      </a>
+      {project.liveUrl && (
+        <a
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-foreground"
+        >
+          Live
+        </a>
+      )}
+
+      {project.github && (
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-foreground"
+        >
+          Repo
+        </a>
+      )}
     </section>
-  )
+  );
 }

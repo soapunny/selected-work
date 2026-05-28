@@ -8,4 +8,5 @@ export type Project = {
   tags: string[];
   featured: boolean;
   github?: string;
+  liveUrl?: string;
 };
