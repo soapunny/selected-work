@@ -9,7 +9,7 @@ export const projectsKo: Project[] = [
     description: "실시간 검색과 무한 스크롤이 있는 영화 탐색 앱",
     year: "2026",
     tags: ["React", "TypeScript", "TMDB API"],
-    featured: true,
+    featured: false,
   },
   {
     slug: "pocketquest",

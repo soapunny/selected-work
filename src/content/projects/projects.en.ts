@@ -10,7 +10,7 @@ export const projectsEn: Project[] = [
       "Movie discovery app with real-time search and infinite scroll",
     year: "2026",
     tags: ["React", "TypeScript", "TMDB API"],
-    featured: true,
+    featured: false,
   },
   {
     slug: "pocketquest",
