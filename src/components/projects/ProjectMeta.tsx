@@ -23,20 +23,21 @@ export function ProjectMeta({ project }: ProjectMetaProps) {
           href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-foreground"
+          className="rounded-md border px-3 py-1 text-xs hover:text-foreground transition-colors"
+          style={{ borderColor: "rgb(var(--border))" }}
         >
-          Live
+          Live ↗
         </a>
       )}
-
       {project.github && (
         <a
           href={project.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-foreground"
+          className="rounded-md border px-3 py-1 text-xs hover:text-foreground transition-colors"
+          style={{ borderColor: "rgb(var(--border))" }}
         >
-          Repo
+          Repo ↗
         </a>
       )}
     </section>
