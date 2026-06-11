@@ -69,6 +69,26 @@ a {
 }
 
 /* -------------------------------------------------
+   Entry animations
+--------------------------------------------------*/
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up {
+    animation: none !important;
+  }
+}
+
+/* -------------------------------------------------
    Minimal global utilities
 --------------------------------------------------*/
 @layer utilities {
@@ -76,6 +96,16 @@ a {
   .container-shell {
     @apply mx-auto w-full max-w-6xl px-4;
   }
+
+  /* Entry animation */
+  .animate-fade-up {
+    animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .anim-delay-1 { animation-delay: 80ms; }
+  .anim-delay-2 { animation-delay: 160ms; }
+  .anim-delay-3 { animation-delay: 240ms; }
+  .anim-delay-4 { animation-delay: 320ms; }
+  .anim-delay-5 { animation-delay: 400ms; }
 
   /* Premium dark background with soft glow (for the Home hero area) */
   .bg-premium {

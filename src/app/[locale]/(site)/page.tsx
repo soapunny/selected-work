@@ -22,7 +22,7 @@ export default async function Home({
       {/* Hero */}
       <section className="hero-layout">
         {/* Left: Portrait */}
-        <div className="flex justify-center md:justify-center">
+        <div className="flex justify-center md:justify-center animate-fade-up">
           <div className="relative w-[280px] overflow-hidden rounded-3xl border border-white/10 bg-background/30 grayscale-5% p-2 glow-soft md:w-[280px]">
             <div className="relative aspect-4/5 overflow-hidden rounded-2xl">
               <Image
@@ -41,11 +41,11 @@ export default async function Home({
 
         {/* Right: Title + CTAs */}
         <div className="mt-6 min-w-0 flex flex-col items-start justify-center md:mt-0 md:items-start">
-          <p className="text-base font-semibold tracking-wide text-foreground md:text-lg">
+          <p className="text-base font-semibold tracking-wide text-foreground md:text-lg animate-fade-up anim-delay-1">
             {copy.hero.nameLine}
           </p>
 
-          <h1 className="page-hero">
+          <h1 className="page-hero animate-fade-up anim-delay-2">
             {heroTitleParts.map((part, i) => (
               <span key={i}>
                 {part}
@@ -54,9 +54,9 @@ export default async function Home({
             ))}
           </h1>
 
-          <p className="page-description">{copy.hero.description}</p>
+          <p className="page-description animate-fade-up anim-delay-3">{copy.hero.description}</p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-3 animate-fade-up anim-delay-4">
             <Link href={`/${locale}/projects`} className="btn-primary">
               {copy.hero.ctaPrimary}
             </Link>
@@ -69,7 +69,7 @@ export default async function Home({
       </section>
 
       {/* Featured */}
-      <section className="mt-18">
+      <section className="mt-18 animate-fade-up anim-delay-5">
         <div className="section-header">
           <h2 className="heading-section">{copy.featured.heading}</h2>
           <Link href={`/${locale}/projects`} className="view-all-link">

@@ -26,7 +26,7 @@ export default async function ProjectsPage({
 
       {/* Featured */}
       {primaryFeatured && (
-        <section className="mt-18">
+        <section className="mt-18 animate-fade-up anim-delay-3">
           <div className="section-header">
             <h2 className="heading-section">{copy.featuredHeading}</h2>
             <span />

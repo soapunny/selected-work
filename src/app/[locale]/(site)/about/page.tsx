@@ -17,7 +17,7 @@ export default async function AboutPage({
       <div className="section-divider" />
 
       {/* Philosophy */}
-      <section className="section-block grid gap-10 md:grid-cols-2">
+      <section className="section-block grid gap-10 md:grid-cols-2 animate-fade-up anim-delay-3">
         <div>
           <h2 className="heading-section">{copy.sections.approachTitle}</h2>
           <p className="mt-4 text-body-sm text-muted">

@@ -6,8 +6,10 @@ export function PageHeader({ copy }: PageHeaderProps) {
   const titleParts = copy.title.split("\n");
   return (
     <section>
-      {copy.kicker && <p className="page-kicker">{copy.kicker}</p>}
-      <h1 className="page-hero">
+      {copy.kicker && (
+        <p className="page-kicker animate-fade-up">{copy.kicker}</p>
+      )}
+      <h1 className="page-hero animate-fade-up anim-delay-1">
         {titleParts.map((part, i) => (
           <span key={i}>
             {part}
@@ -16,7 +18,9 @@ export function PageHeader({ copy }: PageHeaderProps) {
         ))}
       </h1>
       {copy.description && (
-        <p className="page-description">{copy.description}</p>
+        <p className="page-description animate-fade-up anim-delay-2">
+          {copy.description}
+        </p>
       )}
     </section>
   );

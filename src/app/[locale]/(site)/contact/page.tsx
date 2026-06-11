@@ -18,7 +18,7 @@ export default async function ContactPage({
       <div className="section-divider" />
 
       {/* Primary actions */}
-      <section className="section-block">
+      <section className="section-block animate-fade-up anim-delay-3">
         <div className="section-header">
           <h2 className="heading-section">{copy.sections.waysTitle}</h2>
           <span />
