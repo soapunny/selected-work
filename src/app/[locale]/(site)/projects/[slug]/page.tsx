@@ -147,10 +147,12 @@ export default async function ProjectDetailPage({
             <div className="code-card" key={s.title}>
               <h3 className="code-title">{s.title}</h3>
               <p className="code-subtitle">{s.subtitle}</p>
-              <div
-                className="code-block-sm"
-                dangerouslySetInnerHTML={{ __html: s.html }}
-              />
+              <div className="code-scroll-hint">
+                <div
+                  className="code-block-sm"
+                  dangerouslySetInnerHTML={{ __html: s.html }}
+                />
+              </div>
             </div>
           ))}
         </div>

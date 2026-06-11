@@ -40,6 +40,7 @@ body {
 }
 
 body {
+  overflow-x: hidden;
   background: rgb(var(--bg));
   color: rgb(var(--fg));
   font-family:
@@ -407,11 +408,33 @@ a {
   }
 
   .code-block-sm {
-    @apply mt-4 mx-2 overflow-x-auto rounded-2xl border border-white/25 bg-black/80 p-5 text-[13px] leading-4 text-foreground ring-1 ring-white/10;
+    @apply mt-4 mx-2 overflow-x-auto rounded-2xl border border-white/25 bg-black/80 p-5 text-[11px] leading-4 text-foreground ring-1 ring-white/10 md:text-[13px];
     font-family:
       var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
       "Liberation Mono", "Courier New", monospace;
     box-shadow: 0 16px 56px -46px rgba(0, 0, 0, 0.95);
+  }
+
+  .code-scroll-hint {
+    position: relative;
+  }
+
+  .code-scroll-hint::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 56px;
+    border-radius: 0 1rem 1rem 0;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.7), transparent);
+    pointer-events: none;
+  }
+
+  @media (min-width: 768px) {
+    .code-scroll-hint::after {
+      display: none;
+    }
   }
 
   .code-block-sm code {
