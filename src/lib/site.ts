@@ -1,4 +1,5 @@
 export const SITE = {
+  url: "https://ethanso.com",
   email: "soapunny@gmail.com",
   githubUrl: "https://github.com/soapunny",
   resumeUrl:
