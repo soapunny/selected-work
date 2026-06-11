@@ -393,10 +393,12 @@ a {
 
   .code-grid {
     @apply mt-6 grid gap-4;
+    overflow: hidden;
   }
 
   .code-card {
     @apply rounded-3xl border border-white/10 bg-black/35 p-6;
+    min-width: 0; /* prevent grid item from expanding beyond column width */
   }
 
   .code-title {
