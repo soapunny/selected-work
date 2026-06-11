@@ -1,6 +1,4 @@
-// src/components/projects/ProjectMeta.tsx
-
-import type { Project } from "@/content/projects/types";
+import type { Project } from "@/content/projects/projects";
 
 type ProjectMetaProps = {
   project: Project;
@@ -23,8 +21,7 @@ export function ProjectMeta({ project }: ProjectMetaProps) {
           href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-md border px-3 py-1 text-xs hover:text-foreground transition-colors"
-          style={{ borderColor: "rgb(var(--border))" }}
+          className="rounded-md border border-border px-3 py-1 text-xs transition-colors hover:text-foreground"
         >
           Live ↗
         </a>
@@ -34,8 +31,7 @@ export function ProjectMeta({ project }: ProjectMetaProps) {
           href={project.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-md border px-3 py-1 text-xs hover:text-foreground transition-colors"
-          style={{ borderColor: "rgb(var(--border))" }}
+          className="rounded-md border border-border px-3 py-1 text-xs transition-colors hover:text-foreground"
         >
           Repo ↗
         </a>

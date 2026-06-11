@@ -1,7 +1,7 @@
-// src/app/[locale]/(site)/contact/page.tsx
-
 import Link from "next/link";
 import { getContactCopy } from "@/content/pages";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { SITE } from "@/lib/site";
 
 export default async function ContactPage({
   params,
@@ -11,34 +11,9 @@ export default async function ContactPage({
   const { locale } = await params;
   const copy = getContactCopy(locale);
 
-  const email = "soapunny@gmail.com";
-  const githubUrl = "https://github.com/soapunny";
-  const resumeUrl =
-    "https://drive.google.com/file/d/1gOUzuwX0eHMYgeizID39miGPSbg6ZkT4/view?usp=share_link";
-
-  const headerTitleParts = copy.header.title.split("\n");
-
   return (
     <main className="container-shell section-block pb-14 md:pb-16">
-      {/* Header */}
-      <section>
-        {copy.header.kicker && (
-          <p className="page-kicker">{copy.header.kicker}</p>
-        )}
-
-        <h1 className="page-hero">
-          {headerTitleParts.map((part, i) => (
-            <span key={i}>
-              {part}
-              {i < headerTitleParts.length - 1 ? <br /> : null}
-            </span>
-          ))}
-        </h1>
-
-        {copy.header.description && (
-          <p className="page-description">{copy.header.description}</p>
-        )}
-      </section>
+      <PageHeader copy={copy.header} />
 
       <div className="section-divider" />
 
@@ -50,7 +25,7 @@ export default async function ContactPage({
         </div>
 
         <div className="space-y-4">
-          <a className="btn-primary w-full" href={`mailto:${email}`}>
+          <a className="btn-primary w-full" href={`mailto:${SITE.email}`}>
             <span className="inline-flex w-5 justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +51,7 @@ export default async function ContactPage({
           </a>
           <Link
             className="btn-secondary w-full"
-            href={githubUrl}
+            href={SITE.githubUrl}
             target="_blank"
           >
             <span className="inline-flex w-5 justify-center">
@@ -94,7 +69,7 @@ export default async function ContactPage({
 
           <Link
             className="btn-secondary w-full"
-            href={resumeUrl}
+            href={SITE.resumeUrl}
             target="_blank"
           >
             <span className="inline-flex w-5 justify-center">

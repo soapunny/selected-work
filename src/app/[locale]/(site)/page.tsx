@@ -78,7 +78,7 @@ export default async function Home({
         </div>
 
         <Link
-          href={`/${locale}/projects/pocketquest`}
+          href={`/${locale}/projects/${primaryProject.slug}`}
           className="group card-premium"
         >
           <div className="flex flex-col gap-8">
@@ -91,7 +91,7 @@ export default async function Home({
               </p>
 
               <h3 className="mt-2 text-2xl font-semibold tracking-tight text-foreground transition group-hover:text-white">
-                PocketQuest
+                {primaryProject.title}
               </h3>
 
               <p className="mt-3 max-w-2xl text-body-sm text-muted">

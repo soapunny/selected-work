@@ -1,11 +1,11 @@
-// src/components/locale/NavLocale.tsx
-
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function NavLocale({ locale }: { locale: string }) {
+type NavLocaleProps = { locale: string };
+
+export function NavLocale({ locale }: NavLocaleProps) {
   const pathname = usePathname();
 
   const switchLocale = (targetLocale: string) => {

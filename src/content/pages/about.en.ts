@@ -17,6 +17,15 @@ export const aboutEn: AboutCopy = {
     focusBody:
       "Next.js and TypeScript on the web, practical domain policies on the server, and UI systems that keep product behavior consistent as the codebase grows.",
     coreStackTitle: "Core Stack",
+    coreStackItems: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "UI System Design",
+      "Product Thinking",
+    ],
     closingTitle: "What I optimize for",
     closingBody:
       "Predictable behavior, explicit boundaries, and maintainable systems that hold up under real product constraints.",

@@ -1,13 +1,9 @@
-// src/app/[locale]/(site)/projects/page.tsx
-
 import Link from "next/link";
 import { ProjectGrid } from "@/components/projects/ProjectGrid";
-import {
-  getAllProjects,
-  getFeaturedProjects,
-} from "@/content/projects/projects";
+import { getAllProjects, getFeaturedProjects } from "@/content/projects/projects";
 import { getProjectsPageCopy } from "@/content/pages";
 import { FeaturedProjectCard } from "@/components/projects/FeaturedProjectCard";
+import { PageHeader } from "@/components/ui/PageHeader";
 
 export default async function ProjectsPage({
   params,
@@ -22,27 +18,10 @@ export default async function ProjectsPage({
 
   const primaryFeatured = featured[0];
 
-  const headerTitleParts = copy.header.title.split("\n");
-
   return (
     <main className="container-shell pt-12 pb-12 md:pt-14 md:pb-14">
       <header className="mb-12">
-        {copy.header.kicker && (
-          <p className="page-kicker">{copy.header.kicker}</p>
-        )}
-
-        <h1 className="page-hero">
-          {headerTitleParts.map((part, i) => (
-            <span key={i}>
-              {part}
-              {i < headerTitleParts.length - 1 ? <br /> : null}
-            </span>
-          ))}
-        </h1>
-
-        {copy.header.description && (
-          <p className="page-description">{copy.header.description}</p>
-        )}
+        <PageHeader copy={copy.header} />
       </header>
 
       {/* Featured */}
@@ -53,9 +32,12 @@ export default async function ProjectsPage({
             <span />
           </div>
 
-          <FeaturedProjectCard locale={locale} project={primaryFeatured} />
+          <FeaturedProjectCard
+            locale={locale}
+            project={primaryFeatured}
+            ctaText={copy.featuredCardCta}
+          />
 
-          {/* Secondary featured (if any) */}
           {featured.length > 1 && (
             <div className="mt-6">
               <ProjectGrid locale={locale} projects={featured.slice(1)} />

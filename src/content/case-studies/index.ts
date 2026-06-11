@@ -3,11 +3,7 @@
 import type { CaseStudy } from "./types";
 import { caseStudiesEn } from "./caseStudies.en";
 import { caseStudiesKo } from "./caseStudies.ko";
-
-type ContentLocale = "en" | "ko";
-function normalizeLocale(locale: string): ContentLocale {
-  return locale === "ko" ? "ko" : "en";
-}
+import { normalizeLocale } from "@/lib/locale";
 
 export function getCaseStudy(locale: string, slug: string): CaseStudy | null {
   const l = normalizeLocale(locale);

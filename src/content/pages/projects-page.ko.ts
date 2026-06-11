@@ -10,6 +10,7 @@ export const projectsPageKo: ProjectsPageCopy = {
       "아키텍처/도메인 규칙/화면 톤을 함께 설계한 프로젝트를 정리했습니다.",
   },
   featuredHeading: "Featured work",
+  featuredCardCta: "케이스 스터디 보기",
   moreHeading: "More work",
   contactCta: "Contact →",
 };

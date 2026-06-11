@@ -1,7 +1,5 @@
 // src/content/pages/types.ts
 
-export type ContentLocale = "en" | "ko";
-
 export type PageHeaderCopy = {
   kicker?: string;
   title: string;
@@ -32,6 +30,7 @@ export type AboutCopy = {
     focusTitle: string;
     focusBody: string;
     coreStackTitle: string;
+    coreStackItems: string[];
     closingTitle: string;
     closingBody: string;
     closingCta: string;
@@ -54,6 +53,7 @@ export type ContactCopy = {
 export type ProjectsPageCopy = {
   header: PageHeaderCopy;
   featuredHeading: string;
+  featuredCardCta: string;
   moreHeading: string;
   contactCta: string;
 };

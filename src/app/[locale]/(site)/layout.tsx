@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
-import NavLocale from "@/components/locale/NavLocale";
+import { NavLocale } from "@/components/locale/NavLocale";
 import { getNav } from "@/content/nav";
 
 export default async function SiteLayout({

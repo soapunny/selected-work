@@ -10,6 +10,7 @@ export const projectsPageEn: ProjectsPageCopy = {
       "Projects where architecture, domain rules, and visual restraint come together.",
   },
   featuredHeading: "Featured work",
+  featuredCardCta: "View case study",
   moreHeading: "More work",
   contactCta: "Contact →",
 };

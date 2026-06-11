@@ -13,11 +13,7 @@ import { homeKo } from "./home.ko";
 import { projectsPageEn } from "./projects-page.en";
 import { projectsPageKo } from "./projects-page.ko";
 
-type ContentLocale = "en" | "ko";
-
-function normalizeLocale(locale: string): ContentLocale {
-  return locale === "ko" ? "ko" : "en";
-}
+import { normalizeLocale } from "@/lib/locale";
 
 export function getHomeCopy(locale: string): HomeCopy {
   const l = normalizeLocale(locale);

@@ -3,12 +3,7 @@
 import type { Project } from "./types";
 import { projectsEn } from "./projects.en";
 import { projectsKo } from "./projects.ko";
-
-export type ContentLocale = "en" | "ko";
-
-function normalizeLocale(locale: string): ContentLocale {
-  return locale === "ko" ? "ko" : "en";
-}
+import { normalizeLocale } from "@/lib/locale";
 
 export function getAllProjects(locale: string): Project[] {
   const l = normalizeLocale(locale);

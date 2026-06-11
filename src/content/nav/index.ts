@@ -3,12 +3,7 @@
 import type { NavCopy } from "./types";
 import { navEn } from "./nav.en";
 import { navKo } from "./nav.ko";
-
-type ContentLocale = "en" | "ko";
-
-function normalizeLocale(locale: string): ContentLocale {
-  return locale === "ko" ? "ko" : "en";
-}
+import { normalizeLocale } from "@/lib/locale";
 
 export function getNav(locale: string): NavCopy {
   const l = normalizeLocale(locale);
