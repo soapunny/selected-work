@@ -1,5 +1,6 @@
 // src/app/[locale]/(site)/projects/[slug]/page.tsx
 
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProjectBySlug } from "@/content/projects/projects";
 import { getCaseStudy } from "@/content/case-studies";
@@ -7,6 +8,24 @@ import type { CaseStudySnippet } from "@/content/case-studies/types";
 import { ProjectHero } from "@/components/projects/ProjectHero";
 import { ProjectMeta } from "@/components/projects/ProjectMeta";
 import { highlightToHtml } from "@/lib/prettier";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const project = getProjectBySlug(locale, slug);
+  if (!project) return {};
+  return {
+    title: project.title,
+    description: project.description,
+    openGraph: {
+      title: `${project.title} | Ethan So`,
+      description: project.description,
+    },
+  };
+}
 
 export default async function ProjectDetailPage({
   params,

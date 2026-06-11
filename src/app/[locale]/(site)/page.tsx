@@ -1,9 +1,27 @@
 // src/app/[locale]/(site)/page.tsx
 
+import type { Metadata } from "next";
 import { getFeaturedProjects } from "@/content/projects/projects";
 import { getHomeCopy } from "@/content/pages";
 import Image from "next/image";
 import Link from "next/link";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const copy = getHomeCopy(locale);
+  return {
+    title: { absolute: "Ethan So — Full-Stack Engineer" },
+    description: copy.hero.description,
+    openGraph: {
+      title: "Ethan So — Full-Stack Engineer",
+      description: copy.hero.description,
+    },
+  };
+}
 
 export default async function Home({
   params,

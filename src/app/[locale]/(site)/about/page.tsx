@@ -1,6 +1,24 @@
+import type { Metadata } from "next";
 import { getAboutCopy } from "@/content/pages";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { TagBadge } from "@/components/ui/TagBadge";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const copy = getAboutCopy(locale);
+  return {
+    title: "About",
+    description: copy.header.description,
+    openGraph: {
+      title: "About | Ethan So",
+      description: copy.header.description,
+    },
+  };
+}
 
 export default async function AboutPage({
   params,

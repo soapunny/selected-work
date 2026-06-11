@@ -1,9 +1,27 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ProjectGrid } from "@/components/projects/ProjectGrid";
 import { getAllProjects, getFeaturedProjects } from "@/content/projects/projects";
 import { getProjectsPageCopy } from "@/content/pages";
 import { FeaturedProjectCard } from "@/components/projects/FeaturedProjectCard";
 import { PageHeader } from "@/components/ui/PageHeader";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const copy = getProjectsPageCopy(locale);
+  return {
+    title: "Projects",
+    description: copy.header.description,
+    openGraph: {
+      title: "Projects | Ethan So",
+      description: copy.header.description,
+    },
+  };
+}
 
 export default async function ProjectsPage({
   params,

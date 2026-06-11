@@ -1,7 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getContactCopy } from "@/content/pages";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { SITE } from "@/lib/site";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const copy = getContactCopy(locale);
+  return {
+    title: "Contact",
+    description: copy.header.description,
+    openGraph: {
+      title: "Contact | Ethan So",
+      description: copy.header.description,
+    },
+  };
+}
 
 export default async function ContactPage({
   params,
