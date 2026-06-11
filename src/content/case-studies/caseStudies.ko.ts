@@ -17,6 +17,7 @@ export const caseStudiesKo: Record<string, CaseStudy> = {
     demo: {
       embedUrl: "https://d3j1066xoxz7fm.cloudfront.net",
       caption: "REEL - 영화 탐색 앱 (React + TypeScript)",
+      type: "live",
     },
     architectureIntro:
       "REEL은 React와 TypeScript로 구축한 프론트엔드 중심의 영화 탐색 앱입니다. API 호출은 전용 레이어에 격리하고, 전역 상태는 Zustand로 관리하며, UI 컴포넌트는 단일 책임을 갖도록 설계했습니다.",
@@ -224,6 +225,7 @@ setTrailer(officialTrailer ?? fallback ?? null);`,
     demo: {
       embedUrl: "https://www.youtube.com/embed/O8kaFSF4egs",
       caption: "PocketQuest - Mobile Demo (React Native + Expo)",
+      type: "video",
     },
     architectureIntro:
       "이 프로젝트는 명확한 아키텍처 경계를 기반으로 설계되었습니다. 경계 계층에는 공유 계약을 두고, 서비스 계층에는 도메인 규칙을 배치했으며, 영속성은 리포지토리 계층 뒤에 명확히 분리했습니다.",

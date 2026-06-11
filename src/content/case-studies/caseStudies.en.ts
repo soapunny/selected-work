@@ -17,6 +17,7 @@ export const caseStudiesEn: Record<string, CaseStudy> = {
     demo: {
       embedUrl: "https://d3j1066xoxz7fm.cloudfront.net",
       caption: "REEL - Movie Discovery App (React + TypeScript)",
+      type: "live",
     },
     architectureIntro:
       "REEL is a frontend-first movie discovery app built with React and TypeScript. The architecture is organized around clear separation: API calls are isolated in a dedicated layer, global state is managed with Zustand, and UI components are kept focused and reusable.",
@@ -224,6 +225,7 @@ setTrailer(officialTrailer ?? fallback ?? null);`,
     demo: {
       embedUrl: "https://www.youtube.com/embed/O8kaFSF4egs",
       caption: "PocketQuest - Mobile Demo (React Native + Expo)",
+      type: "video",
     },
     architectureIntro:
       "This project is designed around clear boundaries: shared contracts at the edge, domain rules in the service layer, and persistence isolated behind repositories.",

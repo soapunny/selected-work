@@ -2,7 +2,7 @@
 
 import type { BundledLanguage } from "shiki";
 
-export type CaseStudyDemo = { embedUrl: string; caption: string } | null;
+export type CaseStudyDemo = { embedUrl: string; caption: string; type: "video" | "live" } | null;
 
 export type CaseStudyCard = {
   title: string;

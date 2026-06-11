@@ -348,6 +348,20 @@ a {
     }
   }
 
+  /* Live app embed — taller on mobile so the app is usable */
+  .video-embed--live {
+    aspect-ratio: unset;
+    height: 65vh;
+    min-height: 520px;
+  }
+
+  @media (min-width: 768px) {
+    .video-embed--live {
+      height: 700px;
+      min-height: unset;
+    }
+  }
+
   /* Shorts are vertical; use 9:16 so the video fills the frame instead of letterboxing */
   .video-embed--shorts {
     aspect-ratio: 9 / 16;

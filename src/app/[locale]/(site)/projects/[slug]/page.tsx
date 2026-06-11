@@ -65,7 +65,7 @@ export default async function ProjectDetailPage({
             <span className="case-kbd">{caseStudy.labels.demoBadge}</span>
           </div>
 
-          <div className="video-embed">
+          <div className={`video-embed${caseStudy.demo?.type === "live" ? " video-embed--live" : ""}`}>
             <iframe
               src={caseStudy.demo.embedUrl}
               title={`${project.title} demo`}
