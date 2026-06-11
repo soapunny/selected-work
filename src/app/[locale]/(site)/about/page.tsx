@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getAboutCopy } from "@/content/pages";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { TagBadge } from "@/components/ui/TagBadge";
+import { Reveal } from "@/components/ui/Reveal";
 
 export async function generateMetadata({
   params,
@@ -35,43 +36,49 @@ export default async function AboutPage({
       <div className="section-divider" />
 
       {/* Philosophy */}
-      <section className="section-block grid gap-10 md:grid-cols-2 animate-fade-up anim-delay-3">
-        <div>
-          <h2 className="heading-section">{copy.sections.approachTitle}</h2>
-          <p className="mt-4 text-body-sm text-muted">
-            {copy.sections.approachBody}
-          </p>
-        </div>
+      <Reveal>
+        <section className="section-block grid gap-10 md:grid-cols-2">
+          <div>
+            <h2 className="heading-section">{copy.sections.approachTitle}</h2>
+            <p className="mt-4 text-body-sm text-muted">
+              {copy.sections.approachBody}
+            </p>
+          </div>
 
-        <div>
-          <h2 className="heading-section">{copy.sections.focusTitle}</h2>
-          <p className="mt-4 text-body-sm text-muted">
-            {copy.sections.focusBody}
-          </p>
-        </div>
-      </section>
+          <div>
+            <h2 className="heading-section">{copy.sections.focusTitle}</h2>
+            <p className="mt-4 text-body-sm text-muted">
+              {copy.sections.focusBody}
+            </p>
+          </div>
+        </section>
+      </Reveal>
 
       <div className="section-divider" />
 
       {/* Core Stack */}
-      <section className="section-block">
-        <h2 className="heading-section">{copy.sections.coreStackTitle}</h2>
-        <div className="mt-6 flex flex-wrap gap-3">
-          {copy.sections.coreStackItems.map((skill) => (
-            <TagBadge key={skill} label={skill} />
-          ))}
-        </div>
-      </section>
+      <Reveal>
+        <section className="section-block">
+          <h2 className="heading-section">{copy.sections.coreStackTitle}</h2>
+          <div className="mt-6 flex flex-wrap gap-3">
+            {copy.sections.coreStackItems.map((skill) => (
+              <TagBadge key={skill} label={skill} />
+            ))}
+          </div>
+        </section>
+      </Reveal>
 
       <div className="section-divider" />
 
-      <section className="section-block">
-        <h2 className="heading-section">{copy.sections.closingTitle}</h2>
-        <p className="mt-4 text-body-sm text-muted">
-          {copy.sections.closingBody}
-        </p>
-        <p className="mt-4 text-body-sm">{copy.sections.closingCta}</p>
-      </section>
+      <Reveal>
+        <section className="section-block">
+          <h2 className="heading-section">{copy.sections.closingTitle}</h2>
+          <p className="mt-4 text-body-sm text-muted">
+            {copy.sections.closingBody}
+          </p>
+          <p className="mt-4 text-body-sm">{copy.sections.closingCta}</p>
+        </section>
+      </Reveal>
     </main>
   );
 }

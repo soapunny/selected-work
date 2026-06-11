@@ -5,6 +5,7 @@ import { getAllProjects, getFeaturedProjects } from "@/content/projects/projects
 import { getProjectsPageCopy } from "@/content/pages";
 import { FeaturedProjectCard } from "@/components/projects/FeaturedProjectCard";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { Reveal } from "@/components/ui/Reveal";
 
 export async function generateMetadata({
   params,
@@ -65,16 +66,18 @@ export default async function ProjectsPage({
       )}
 
       {/* All projects */}
-      <section className="mt-14">
-        <div className="section-header">
-          <h2 className="heading-section">{copy.moreHeading}</h2>
-          <Link href={`/${locale}/contact`} className="view-all-link">
-            {copy.contactCta}
-          </Link>
-        </div>
+      <Reveal className="mt-14">
+        <section>
+          <div className="section-header">
+            <h2 className="heading-section">{copy.moreHeading}</h2>
+            <Link href={`/${locale}/contact`} className="view-all-link">
+              {copy.contactCta}
+            </Link>
+          </div>
 
-        <ProjectGrid locale={locale} projects={all} />
-      </section>
+          <ProjectGrid locale={locale} projects={all} />
+        </section>
+      </Reveal>
     </main>
   );
 }

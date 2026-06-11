@@ -7,6 +7,7 @@ import { getCaseStudy } from "@/content/case-studies";
 import type { CaseStudySnippet } from "@/content/case-studies/types";
 import { ProjectHero } from "@/components/projects/ProjectHero";
 import { ProjectMeta } from "@/components/projects/ProjectMeta";
+import { Reveal } from "@/components/ui/Reveal";
 import { highlightToHtml } from "@/lib/prettier";
 
 export async function generateMetadata({
@@ -41,7 +42,6 @@ export default async function ProjectDetailPage({
     getCaseStudy(locale, slug) ?? getCaseStudy(locale, "pocketquest");
   if (!caseStudy) return notFound();
 
-  // Pre-render highlighted HTML for code snippets (can't use `await` inside a non-async map callback in JSX)
   const highlightedSnippets: Array<CaseStudySnippet & { html: string }> =
     await Promise.all(
       caseStudy.snippets.map(async (s) => ({
@@ -59,108 +59,118 @@ export default async function ProjectDetailPage({
 
       {/* Demo video (optional per project) */}
       {caseStudy.demo ? (
+        <Reveal>
+          <section className="section-block">
+            <div className="section-header">
+              <h2 className="heading-section">{caseStudy.labels.demoTitle}</h2>
+              <span className="case-kbd">{caseStudy.labels.demoBadge}</span>
+            </div>
+
+            <div className={`video-embed${caseStudy.demo.type === "live" ? " video-embed--live" : ""}`}>
+              <iframe
+                src={caseStudy.demo.embedUrl}
+                title={`${project.title} demo`}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+            <p className="video-caption">{caseStudy.demo.caption}</p>
+
+            <div className="section-divider" />
+          </section>
+        </Reveal>
+      ) : null}
+
+      {/* System Architecture */}
+      <Reveal>
         <section className="section-block">
           <div className="section-header">
-            <h2 className="heading-section">{caseStudy.labels.demoTitle}</h2>
-            <span className="case-kbd">{caseStudy.labels.demoBadge}</span>
+            <h2 className="heading-section">{caseStudy.labels.architectureTitle}</h2>
+            <span className="case-kbd">{caseStudy.labels.architectureBadge}</span>
           </div>
 
-          <div className={`video-embed${caseStudy.demo?.type === "live" ? " video-embed--live" : ""}`}>
-            <iframe
-              src={caseStudy.demo.embedUrl}
-              title={`${project.title} demo`}
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          </div>
-          <p className="video-caption">{caseStudy.demo.caption}</p>
+          <p className="mt-4 max-w-3xl text-body-lg text-muted">
+            {caseStudy.architectureIntro}
+          </p>
+
+          <div className="arch-flow">{caseStudy.architectureFlow}</div>
 
           <div className="section-divider" />
         </section>
-      ) : null}
+      </Reveal>
 
-      {/* Case study (system-first) */}
-      <section className="section-block">
-        <div className="section-header">
-          <h2 className="heading-section">{caseStudy.labels.architectureTitle}</h2>
-          <span className="case-kbd">{caseStudy.labels.architectureBadge}</span>
-        </div>
+      {/* Domain / Design Principles */}
+      <Reveal>
+        <section className="section-block">
+          <div className="section-header">
+            <h2 className="heading-section">{caseStudy.labels.domainTitle}</h2>
+            <span className="case-kbd">{caseStudy.labels.domainBadge}</span>
+          </div>
 
-        <p className="mt-4 max-w-3xl text-body-lg text-muted">
-          {caseStudy.architectureIntro}
-        </p>
+          <p className="mt-4 max-w-3xl text-body-lg text-muted">
+            {caseStudy.domainIntro}
+          </p>
 
-        <div className="arch-flow">{caseStudy.architectureFlow}</div>
+          <p className="mt-4 max-w-3xl text-body-sm text-muted">
+            <span className="text-foreground">Impact:</span> {caseStudy.impact}
+          </p>
 
-        <div className="section-divider" />
-      </section>
+          <p className="mt-4 max-w-3xl text-body-sm text-muted">
+            <span className="text-foreground">Trade-offs:</span>{" "}
+            {caseStudy.tradeoffs}
+          </p>
 
-      <section className="section-block">
-        <div className="section-header">
-          <h2 className="heading-section">{caseStudy.labels.domainTitle}</h2>
-          <span className="case-kbd">{caseStudy.labels.domainBadge}</span>
-        </div>
-
-        <p className="mt-4 max-w-3xl text-body-lg text-muted">
-          {caseStudy.domainIntro}
-        </p>
-
-        <p className="mt-4 max-w-3xl text-body-sm text-muted">
-          <span className="text-foreground">Impact:</span> {caseStudy.impact}
-        </p>
-
-        <p className="mt-4 max-w-3xl text-body-sm text-muted">
-          <span className="text-foreground">Trade-offs:</span>{" "}
-          {caseStudy.tradeoffs}
-        </p>
-
-        <div className="grid mt-6 gap-4 md:grid-cols-2">
-          {caseStudy.domainCards.map((c) => (
-            <div className="case-card" key={c.title}>
-              <h3 className="case-card-title">{c.title}</h3>
-              <p className="mt-3 text-body-sm text-muted">{c.body}</p>
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-6 text-body-sm text-muted">
-          <span className="text-foreground">Example:</span>{" "}
-          {caseStudy.exampleNote}
-        </p>
-
-        <div className="section-divider" />
-      </section>
-
-      <section className="section-block">
-        <div className="section-header">
-          <h2 className="heading-section">{caseStudy.labels.selectedTitle}</h2>
-          <span className="case-kbd">{caseStudy.labels.selectedBadge}</span>
-        </div>
-
-        <p className="mt-4 max-w-3xl text-body-lg text-muted">
-          {caseStudy.selectedIntro}
-        </p>
-
-        <div className="code-grid">
-          {highlightedSnippets.map((s) => (
-            <div className="code-card" key={s.title}>
-              <h3 className="code-title">{s.title}</h3>
-              <p className="code-subtitle">{s.subtitle}</p>
-              <div className="code-scroll-hint">
-                <div
-                  className="code-block-sm"
-                  dangerouslySetInnerHTML={{ __html: s.html }}
-                />
+          <div className="grid mt-6 gap-4 md:grid-cols-2">
+            {caseStudy.domainCards.map((c) => (
+              <div className="case-card" key={c.title}>
+                <h3 className="case-card-title">{c.title}</h3>
+                <p className="mt-3 text-body-sm text-muted">{c.body}</p>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <p className="code-caption">{caseStudy.selectedFooter}</p>
+          <p className="mt-6 text-body-sm text-muted">
+            <span className="text-foreground">Example:</span>{" "}
+            {caseStudy.exampleNote}
+          </p>
 
-        <p className="mt-4 text-body-sm text-muted">{caseStudy.patternNote}</p>
-      </section>
+          <div className="section-divider" />
+        </section>
+      </Reveal>
+
+      {/* Selected Code */}
+      <Reveal>
+        <section className="section-block">
+          <div className="section-header">
+            <h2 className="heading-section">{caseStudy.labels.selectedTitle}</h2>
+            <span className="case-kbd">{caseStudy.labels.selectedBadge}</span>
+          </div>
+
+          <p className="mt-4 max-w-3xl text-body-lg text-muted">
+            {caseStudy.selectedIntro}
+          </p>
+
+          <div className="code-grid">
+            {highlightedSnippets.map((s) => (
+              <div className="code-card" key={s.title}>
+                <h3 className="code-title">{s.title}</h3>
+                <p className="code-subtitle">{s.subtitle}</p>
+                <div className="code-scroll-hint">
+                  <div
+                    className="code-block-sm"
+                    dangerouslySetInnerHTML={{ __html: s.html }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="code-caption">{caseStudy.selectedFooter}</p>
+
+          <p className="mt-4 text-body-sm text-muted">{caseStudy.patternNote}</p>
+        </section>
+      </Reveal>
     </main>
   );
 }
