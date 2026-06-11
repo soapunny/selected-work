@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function NotFound() {
   return (
-    <main className="container-shell flex min-h-[70vh] items-center justify-center py-12">
+    <div className="flex min-h-screen items-center justify-center px-4 py-12">
       <div className="w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10">
         <Image
           src="/404.png"
@@ -13,6 +13,6 @@ export default function NotFound() {
           priority
         />
       </div>
-    </main>
+    </div>
   );
 }
