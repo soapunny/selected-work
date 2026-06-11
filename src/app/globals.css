@@ -212,9 +212,17 @@ a {
   .nav-link:hover::after {
     transform: scaleX(1);
     opacity: 1;
-    background: rgba(
-      var(--accent) / 0.55
-    ); /* ✅ hover 때 accent로 더 잘 보이게 */
+    background: rgba(var(--accent) / 0.55);
+  }
+
+  .nav-link-active {
+    color: rgb(var(--fg));
+  }
+
+  .nav-link-active::after {
+    transform: scaleX(1);
+    opacity: 1;
+    background: rgba(var(--accent) / 0.55);
   }
 
   /* language toggle */

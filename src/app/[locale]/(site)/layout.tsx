@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { NavLocale } from "@/components/locale/NavLocale";
+import { NavLinks } from "@/components/locale/NavLinks";
 import { getNav } from "@/content/nav";
 
 export default async function SiteLayout({
@@ -25,15 +26,7 @@ export default async function SiteLayout({
           </Link>
 
           <div className="flex items-center gap-6 text-sm text-muted">
-            <Link href={`/${locale}/projects`} className="nav-link">
-              {nav.items.projects}
-            </Link>
-            <Link href={`/${locale}/about`} className="nav-link">
-              {nav.items.about}
-            </Link>
-            <Link href={`/${locale}/contact`} className="nav-link">
-              {nav.items.contact}
-            </Link>
+            <NavLinks locale={locale} items={nav.items} />
 
             <span className="mx-1 h-4 w-px bg-border" aria-hidden />
 
